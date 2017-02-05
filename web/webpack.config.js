@@ -40,7 +40,7 @@ module.exports = {
         }),
         new ExtractTextPlugin('bundle.css'),
         new HtmlWebpackPlugin({
-            title: "Roguelike",
+            title: "Musity",
             template: "templates/index.ejs"
         })
     ],

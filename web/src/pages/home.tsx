@@ -2,9 +2,15 @@ import * as React from "react";
 
 import { Link } from 'react-router';
 
-export interface IHomeProps {}
+import { Map } from '../components/location_map';
+
+export interface IHomeProps {
+    locId?: string
+}
 
 export interface IHomeState {}
+
+require('../sass/body.scss');
 
 export class Home extends React.Component<IHomeProps, IHomeState> {
 
@@ -14,8 +20,9 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
 
     render() {
         return (
-            <div>
-                <h2>Hello, world.</h2>
+            <div className="panel">
+                <Map/>
+                { this.props.children }
             </div>
         );
     }

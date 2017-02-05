@@ -1,5 +1,6 @@
-import * as React from "react";
-import {Link} from "react-router"
+import * as React from 'react';
+import { MuiThemeProvider, getMuiTheme } from "material-ui/styles";
+import AppBar from 'material-ui/AppBar';
 
 
 export interface ILayoutProps {}
@@ -7,6 +8,12 @@ export interface ILayoutProps {}
 export interface ILayoutState {
     title?: string,
 }
+
+const muiTheme = getMuiTheme({
+    palette: {
+        primary1Color: "rgba(59, 193, 74, 1)",
+    }
+});
 
 export class Layout extends React.Component<ILayoutProps, ILayoutState> {
     constructor() {
@@ -19,12 +26,14 @@ export class Layout extends React.Component<ILayoutProps, ILayoutState> {
 
     render() {
         return (
-            <div>
-                <h1>{ this.state.title }</h1>
-                <main>
-                    {this.props.children}
-                </main>
-            </div>
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <div className={"main-panel"}>
+                <AppBar className={"navbar"} title={this.state.title}/>
+                    <div className={"content"}>
+                        { this.props.children }
+                    </div>
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

@@ -1,0 +1,28 @@
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+.panel {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.main-panel {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.navbar {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    flex: 1;
+}
