@@ -46,3 +46,8 @@
   horizontal-align: left;
   margin-left: 10;
 }
+
+.page-container {
+  vertical-align: top;
+  height: 100%;
+}

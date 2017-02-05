@@ -20,6 +20,7 @@
     "@angular/router": "3.4.3",
     "nativescript-angular": "1.4.0",
     "nativescript-angular-snapshot": "1.4.0-5.5.372.32",
+    "nativescript-geolocation": "0.0.17",
     "nativescript-spotify": "^1.6.1",
     "nativescript-theme-core": "~1.0.2",
     "reflect-metadata": "~0.1.8",

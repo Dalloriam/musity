@@ -1,4 +1,19 @@
-<GridLayout>
-  <app-actionbar title="Musity"></app-actionbar>
-  <Label text="test"></Label>
+<GridLayout class="page-container">
+  <StackLayout>
+    <app-actionbar></app-actionbar>
+    <GridLayout class="location-container">
+      <StackLayout>
+        <Label #lblTitle  class="location-title"></Label>
+        <Label #lblArtist class="location-artist"></Label>
+      </StackLayout>
+    </GridLayout>
+    <StackLayout>
+      <GridLayout *ngFor="let track of tracks; let i = index;">
+        <Label text="track.name"></Label>
+      </GridLayout>
+    </StackLayout>
+  </StackLayout>
+  <GridLayout #btnContainer class="location-activate">
+    <Button class="btn" text="Start" (tap)="startGeolocation()"></Button>
+  </GridLayout>
 </GridLayout>

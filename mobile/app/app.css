@@ -1,7 +1,7 @@
 @import 'nativescript-theme-core/css/core.light.css';
 @import '~/css/global.css';
 @import '~/css/auth.css';
-@import '~/css/actiobar.css';
+@import '~/css/actionbar.css';
 @import '~/css/location.css';
 
 Page {

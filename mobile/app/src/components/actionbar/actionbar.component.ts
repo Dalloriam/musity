@@ -7,8 +7,6 @@ import { PlayerService } from '../../services/player.service';
   templateUrl: 'src/components/actionbar/actionbar.component.html',
 })
 export class ActionbarCmp {
-  @Input() title: string = '';
-
   constructor(private playerService: PlayerService) {}
 
   logout() {

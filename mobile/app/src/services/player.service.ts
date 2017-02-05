@@ -11,7 +11,10 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class PlayerService {
   private _subject: Subject<Object> = new Subject<Object>();
+  private playing: boolean = false;
   private _spotify: TNSSpotifyPlayer;
+  private track: string = '';
+  private uri: string = '';
 
   constructor(private authService: AuthService) {
     this._spotify = new TNSSpotifyPlayer();
@@ -19,11 +22,41 @@ export class PlayerService {
     this.setupEvents();
   }
 
+  currentTrack() {
+    return this.track;
+  }
+
   login() {
     TNSSpotifyAuth.LOGIN();
   }
 
   logout() {
+    this.stop();
+    TNSSpotifyAuth.LOGOUT();
+    this.authService.logout();
+  }
+
+  play(uri: string, id: string) {
+    if (!this._spotify.isPlaying() || this.track !== id) {
+      this.track = id;
+      this.uri = uri;
+      console.log('switchApp');
+      this._spotify.togglePlay(uri).then((isPlaying: boolean) => {
+        console.log('track playing');
+      }, (error) => {
+        console.log(`Playback error: ${error}`);
+      });
+    }
+  }
+
+  stop() {
+    if (this._spotify.isPlaying()) {
+      this._spotify.togglePlay(this.uri).then((isPlaying: boolean) => {
+        console.log('track playing');
+      }, (error) => {
+        console.log(`Playback error: ${error}`);
+      });
+    }
   }
 
   loginSuccess() {

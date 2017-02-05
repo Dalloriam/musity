@@ -8,6 +8,7 @@ import { DataService } from './services/data.service';
 import { NotificationService } from './services/notification.service';
 import { AuthService } from './services/auth.service';
 import { PlayerService } from './services/player.service';
+import { GeolocationService } from './services/geolocation.service';
 
 import { AppComponent } from '../app.component';
 import { DashboardCmp } from './components/dashboard/dashboard.component';
@@ -34,7 +35,8 @@ import { ActionbarCmp } from './components/actionbar/actionbar.component';
         DataService,
         NotificationService,
         AuthService,
-        PlayerService
+        PlayerService,
+        GeolocationService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
