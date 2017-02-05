@@ -1,0 +1,8 @@
+{
+  "android": {
+    "v8Flags": "--expose_gc"
+  },
+  "main": "index.js",
+  "name": "Musity",
+  "version": "2.5.0"
+}
