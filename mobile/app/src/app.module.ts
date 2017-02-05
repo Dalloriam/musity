@@ -12,7 +12,7 @@ import { PlayerService } from './services/player.service';
 import { AppComponent } from '../app.component';
 import { DashboardCmp } from './components/dashboard/dashboard.component';
 import { AuthCmp } from './components/auth/auth.component';
-//import { ActionbarCmp } from './components/actionbar/actionbar.component';
+import { ActionbarCmp } from './components/actionbar/actionbar.component';
 
 @NgModule({
     bootstrap: [
@@ -28,7 +28,7 @@ import { AuthCmp } from './components/auth/auth.component';
         AppComponent,
         DashboardCmp,
         AuthCmp,
-        //ActionbarCmp
+        ActionbarCmp
     ],
     providers: [
         DataService,

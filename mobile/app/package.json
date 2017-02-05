@@ -3,6 +3,6 @@
     "v8Flags": "--expose_gc"
   },
   "main": "index.js",
-  "name": "Musity",
+  "name": "tns-template-hello-world-ng",
   "version": "2.5.0"
 }

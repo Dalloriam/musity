@@ -13,7 +13,7 @@ import { DataService } from '../../services/data.service';
   templateUrl: 'src/components/auth/auth.component.html',
 })
 export class AuthCmp implements OnInit, OnDestroy {
-  //private _subscriptionAuth: Subscription;
+  private _subscriptionAuth: Subscription;
   private showIndicator: boolean = false;
 
   constructor(private page: Page, private router: Router, private authService: AuthService, private notificationService: NotificationService, private playerService: PlayerService) {
@@ -21,7 +21,7 @@ export class AuthCmp implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*this._subscriptionAuth = this.authService.observable.subscribe((value: any) => {
+    this._subscriptionAuth = this.authService.observable.subscribe((value: any) => {
       if (value.action === 'login') {
         if (value.err) {
           this.notificationService.alert('Error', 'Invalid connection', 'Ok');
@@ -29,13 +29,13 @@ export class AuthCmp implements OnInit, OnDestroy {
           this.router.navigate(['dashboard']);
         }
       }
-    });*/
+    });
   }
 
   ngOnDestroy() {
-    /*if (this._subscriptionAuth) {
+    if (this._subscriptionAuth) {
       this._subscriptionAuth.unsubscribe();
-    }*/
+    }
   }
 
   login() {

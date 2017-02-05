@@ -1,9 +1,16 @@
-android {
-  defaultConfig {
+// Add your native dependencies here:
+
+// Uncomment to add recyclerview-v7 dependency
+//dependencies {
+//	compile 'com.android.support:recyclerview-v7:+'
+//}
+
+android {  
+  defaultConfig {  
     generatedDensities = []
-    applicationId = "org.nativescript.test"
-  }
-  aaptOptions {
-    additionalParameters "--no-version-vectors"
-  }
-}
+    applicationId = "org.nativescript.musitymobile"  
+  }  
+  aaptOptions {  
+    additionalParameters "--no-version-vectors"  
+  }  
+} 

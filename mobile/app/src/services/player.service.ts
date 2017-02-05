@@ -6,13 +6,14 @@ import 'rxjs/add/operator/map';
 import { TNSSpotifyPlayer, TNSSpotifyAuth } from 'nativescript-spotify';
 
 import env from '../env';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class PlayerService {
   private _subject: Subject<Object> = new Subject<Object>();
   private _spotify: TNSSpotifyPlayer;
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this._spotify = new TNSSpotifyPlayer();
     this._spotify.initPlayer(true);
     this.setupEvents();
@@ -26,7 +27,7 @@ export class PlayerService {
   }
 
   loginSuccess() {
-    //this.authService.login();
+    this.authService.login();
   }
 
   loginCheck() {
