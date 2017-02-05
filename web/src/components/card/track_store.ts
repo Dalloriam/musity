@@ -39,7 +39,6 @@ class TrackStore extends EventEmitter {
     }
 
     private cleanTrack(dirtyTrack: any): ITrack {
-        console.log(dirtyTrack)
         let cleanTrack: ITrack = {
             uri: dirtyTrack.uri,
             name: dirtyTrack.name,

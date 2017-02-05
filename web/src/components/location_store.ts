@@ -37,8 +37,6 @@ class LocationStore extends EventEmitter {
                 let a = action as LocationsReceivedAction;
                 a.markers.forEach((m) => {
                     m.title = m.title? m.title: "Untitled";
-                    // TODO: Improve this pls
-                    m.tracks = ["2TpxZ7JUBn3uw46aR7qd6V", "6OyRpRa1xjDNriftwh1dZR"];
                 })
                 this.markers = a.markers;
                 this.emit("LOCATIONS_RECEIVED");

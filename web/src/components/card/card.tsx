@@ -13,6 +13,7 @@ import { CreateGetTracksActions } from "./actions/get_tracks";
 import { CreateGetSuggestionsAction } from "./actions/get_suggestions";
 import { CreateRemoveTrackAction } from "./actions/remove_track";
 import { CreateAddTrackAction } from "./actions/add_track";
+import { CreateGetLocationsAction } from '../location_map/actions/get_locations';
 
 import MenuItem from 'material-ui/MenuItem';
 
@@ -58,7 +59,7 @@ export class Card extends React.Component<ICardProps, ICardState> {
     }
 
     addTrack(track: ITrack) {
-        CreateAddTrackAction(track);
+        CreateAddTrackAction(track, this.state.marker.id);
     }
 
     updateSuggestions() {
@@ -90,6 +91,7 @@ export class Card extends React.Component<ICardProps, ICardState> {
     }
 
     dismiss(y: boolean) {
+        CreateGetLocationsAction();
         browserHistory.replace('/');
     }
 
@@ -106,7 +108,7 @@ export class Card extends React.Component<ICardProps, ICardState> {
     }
 
     removeTrack(track: ITrack) {
-        CreateRemoveTrackAction(track);
+        CreateRemoveTrackAction(track, this.state.marker.id);
     }
 
     render() {
@@ -151,8 +153,6 @@ export class Card extends React.Component<ICardProps, ICardState> {
                 <List>
                     {listItems}
                 </List>
-
-                <img className="img-frame" src={this.state.marker.picture}></img>
             </Dialog>
         )
     }
