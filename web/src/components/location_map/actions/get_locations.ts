@@ -1,4 +1,5 @@
 import { IAction } from "../../IAction";
+import { CreateLocationsReceivedAction } from "./locations_received";
 import dispatcher from "../../dispatcher";
 
 import axios from "axios";
@@ -16,7 +17,7 @@ export function CreateGetLocationsAction() {
 
     axios.get(url)
     .then((response) => {
-        console.log(response);
+        CreateLocationsReceivedAction(response.data);
     },
     (err: Error) => {
         console.log("BRUHHHHHHHHHHHHHH");

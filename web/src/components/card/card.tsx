@@ -2,6 +2,10 @@ import * as React from "react";
 
 import { browserHistory } from 'react-router';
 
+import { IMarker } from "../location_map/IMarker";
+
+import LocationStore from "../location_store";
+
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 
@@ -12,7 +16,7 @@ export interface ICardProps {
 }
 
 export interface ICardState {
-
+    marker: IMarker
 }
 
 export class Card extends React.Component<ICardProps, ICardState> {
@@ -21,8 +25,13 @@ export class Card extends React.Component<ICardProps, ICardState> {
         super();
     }
 
+    componentWillMount() {
+        this.setState({
+            marker: LocationStore.getMarkerByKey(this.props.params.locId)
+        })
+    }
+
     dismiss(y: boolean) {
-        console.log('pls');
         browserHistory.replace('/');
     }
 
@@ -42,13 +51,16 @@ export class Card extends React.Component<ICardProps, ICardState> {
         ];
         return (
             <Dialog
+                className="yaBoi"
                 title="Edit this location"
                 open={true}
                 modal={false}
                 actions={actions}
                 onRequestClose={this.dismiss.bind(this)}
             >
-                <h2>Yao waddup</h2>
+                <h2>{this.state.marker.title}</h2>
+
+                <img className="img-frame" src={this.state.marker.picture}></img>
             </Dialog>
         )
     }

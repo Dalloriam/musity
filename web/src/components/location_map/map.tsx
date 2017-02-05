@@ -54,6 +54,10 @@ export class Map extends React.Component<IMapProps, IMapState> {
         CreateGetLocationsAction();
     }
 
+    componentWillMount() {
+        LocationStore.on("LOCATIONS_RECEIVED", this.getMarkers.bind(this));
+    }
+
     getMarkers(): void {
         this.setState({
             markers: LocationStore.getMarkers()

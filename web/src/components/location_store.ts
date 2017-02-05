@@ -6,6 +6,8 @@ import { IMarker } from "./location_map/IMarker";
 
 import { IAction } from "./IAction";
 
+import { LocationsReceivedAction } from "./location_map/actions/locations_received";
+
 class LocationStore extends EventEmitter {
     markers: Array<IMarker>;
 
@@ -29,15 +31,20 @@ class LocationStore extends EventEmitter {
     handleActions(action: IAction): void {
         switch (action.type) {
             case "GET_LOCATIONS":
-                console.log("Getting locations...");
                 break
+
             case "LOCATIONS_RECEIVED":
-                console.log("Locations received...");
+                let a = action as LocationsReceivedAction;
+                a.markers.forEach((m) => {
+                    m.title = m.title? m.title: "Oeuvre sans titre"
+                })
+                this.markers = a.markers;
+                this.emit("LOCATIONS_RECEIVED");
                 break
         }
     }
 }
 
 const store = new LocationStore();
-dispatcher.register(store.handleActions.bind(this));
+dispatcher.register(store.handleActions.bind(store));
 export default store;
