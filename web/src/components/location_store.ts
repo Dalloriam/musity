@@ -4,6 +4,8 @@ import dispatcher from "./dispatcher";
 
 import { IMarker } from "./location_map/IMarker";
 
+import { IAction } from "./IAction";
+
 class LocationStore extends EventEmitter {
     markers: Array<IMarker>;
 
@@ -11,14 +13,6 @@ class LocationStore extends EventEmitter {
         super();
 
         this.markers = [
-            {
-                position: {
-                        lat: -25.363882,
-                        lng: 131.044922
-                },
-                key: "waddup",
-                defaultAnimation: 2
-            }
         ];
     }
 
@@ -28,12 +22,19 @@ class LocationStore extends EventEmitter {
 
     getMarkerByKey(key: string): IMarker {
         return this.markers.filter((marker) => {
-            return marker.key == key;
+            return marker.id == key;
         })[0]
     }
 
-    handleActions() {
-
+    handleActions(action: IAction): void {
+        switch (action.type) {
+            case "GET_LOCATIONS":
+                console.log("Getting locations...");
+                break
+            case "LOCATIONS_RECEIVED":
+                console.log("Locations received...");
+                break
+        }
     }
 }
 

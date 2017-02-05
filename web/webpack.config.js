@@ -51,6 +51,14 @@ module.exports = {
         })
     ],
 
+    externals: {
+         'Config': JSON.stringify(debug ? {
+             serverUrl: "http://localhost:5000/api"
+         } : {
+             serverUrl: "/api"
+         })
+     },
+
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".scss"]

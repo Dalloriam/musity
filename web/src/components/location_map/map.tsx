@@ -6,6 +6,8 @@ import { IMarker } from "./IMarker";
 
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
+import { CreateGetLocationsAction } from "./actions/get_locations";
+
 import LocationStore from "../location_store";
 
 interface IMapProps {};
@@ -48,6 +50,8 @@ export class Map extends React.Component<IMapProps, IMapState> {
         this.state = {
             markers: LocationStore.getMarkers()
         }
+
+        CreateGetLocationsAction();
     }
 
     getMarkers(): void {
@@ -57,7 +61,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
     }
 
     handleMarkerClick(marker: IMarker) {
-        browserHistory.push(marker.key);
+        browserHistory.push(marker.id);
     }
 
     render() {
