@@ -25,7 +25,7 @@ class Location(db.Document):
     address = db.StringField(required=False)
     artists = db.StringField()
     picture = db.StringField(required=False)
-    location = db.PointField(required=True)
+    point = db.PointField(required=True)
     tracks = db.ListField(db.ReferenceField(Track), required=False)
 
 
@@ -41,12 +41,12 @@ def seed():
             monument["AdresseCivique"] = ""
         arts = ""
         arts = ', '.join([str(artist['Prenom']) + " " + str(artist["Nom"]) for artist in  monument['Artistes']])
-        loct = Location(title=monument["Titre"], tracks=[], address=monument["AdresseCivique"], location = [float(monument["CoordonneeLongitude"]),
+        loct = Location(title=monument["Titre"], tracks=[], address=monument["AdresseCivique"], point = [float(monument["CoordonneeLongitude"]),
         float(monument["CoordonneeLatitude"])], artists= arts)
         loct.save()
     for mural in murals:
         art = mural["properties"]["artiste"].replace(" et ", ",")
-        loct = Location(title="", tracks=[], address=mural["properties"]["adresse"], location=[float(mural["properties"]["longitude"]),
+        loct = Location(title="", tracks=[], address=mural["properties"]["adresse"], point=[float(mural["properties"]["longitude"]),
             float(mural["properties"]["latitude"])], artists=art, picture=mural["properties"]["image"])
         loct.save()
     return "WP"
@@ -61,11 +61,24 @@ def locations():
         dct["address"] = loct.address
         dct["artists"] = loct.artists
         dct["picture"] = loct.picture
-        dct["position"] = {"lng": loct.location["coordinates"][0], "lat": loct.location["coordinates"][1]}
+        dct["position"] = {"lng": loct.point["coordinates"][0], "lat": loct.point["coordinates"][1]}
         dct["tracks"] = loct.tracks
         lst.append(dct)
     return json.dumps(lst)
 
+@app.route("/api/tracks/<float:longi>/<float:lat>")
+def locatetracks(longi, lat):
+    near = Location.objects(point__near=[longi, lat], point__max_distance=1)
+    if str(near) == []:
+        return None,404
+    return near[0].tracks
+
+@app.after_request
+def apply_caching(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE"
+    response.headers["Access-Control-Allow-Headers"] = "Actions, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"
+    return response
 
 if __name__ == "__main__":
     app.run()
