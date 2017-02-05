@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_mongoengine import MongoEngine
 from flask_mongoengine.wtf import model_form
 import json
@@ -18,14 +18,21 @@ db.init_app(app)
   
 
 class Track(db.Document):
-    spotify_id = db.StringField(required=True)
+   spotify_id = db.StringField(required=True)
+   spotify_uri = db.StringField(required=True)
+
+   def serialize(self):
+       return {
+           'spotify_id': self.spotify_id,
+           'spotify_uri': self.spotify_uri
+       }
 
 class Location(db.Document):
     title = db.StringField(max_length=200, required=False)
     address = db.StringField(required=False)
     artists = db.StringField()
     picture = db.StringField(required=False)
-    point = db.PointField(required=True)
+    point = db.GeoPointField(required=True)
     tracks = db.ListField(db.ReferenceField(Track), required=False)
 
 
@@ -61,18 +68,52 @@ def locations():
         dct["address"] = loct.address
         dct["artists"] = loct.artists
         dct["picture"] = loct.picture
-        dct["position"] = {"lng": loct.point["coordinates"][0], "lat": loct.point["coordinates"][1]}
-        dct["tracks"] = loct.tracks
+        dct["position"] = {"lng": loct.point[0], "lat": loct.point[1]}
+        dct["tracks"] = [ob.serialize() for ob in loct.tracks]
         lst.append(dct)
     return json.dumps(lst)
 
-@app.route("/api/tracks/<float:longi>/<float:lat>")
+@app.route("/api/tracks/<longi>/<lat>")
 def locatetracks(longi, lat):
-    near = Location.objects(point__near=[longi, lat], point__max_distance=1)
-    if str(near) == []:
-        return None,404
-    return near[0].tracks
+    near = Location.objects(point__near={"type": "Point", "coordinates": [float(longi), float(lat)]})
+    if near.count() == 0:
+        return json.dumps({}),404
+    x = near[0]
+    dct = {}
+    dct["title"] = x.title
+    dct["address"] = x.address
+    dct["artists"] = x.artists
+    dct["picture"] = x.picture
+    dct["tracks"] = [ob.serialize() for ob in x.tracks]
+    return json.dumps(near.count())
 
+@app.route("/api/locations/<locationid>/tracks", methods=['POST'])
+def addTracks(locationid):
+    loct = Location.objects(id=locationid)
+    if loct[0].tracks is None:
+        return json.dumps({}),404
+    x = loct[0]
+    tracks = request.get_json()
+    for track in tracks:
+        trackObj = Track(spotify_id = track["spotify_id"], spotify_uri = track["spotify_uri"])
+        if trackObj not in x.tracks:
+            trackObj.save()
+            x.tracks.append(trackObj)
+            x.save()
+    return json.dumps(tracks)
+
+@app.route("/api/locations/<locationid>/tracks/<trackid>" , methods=['DELETE'])
+def deleteTracks(locationid, trackid):
+        loct = Location.objects(id=locationid)
+        if loct[0].tracks is None:
+            return json.dumps({}),404
+        x = loct[0]
+        for track in x.tracks:
+            if track["spotify_id"] == trackid:
+                x.tracks.remove(track)
+                x.save()
+                return json.dumps({}),200
+        return json.dumps({}),404
 @app.after_request
 def apply_caching(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
