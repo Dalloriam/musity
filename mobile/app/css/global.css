@@ -1,0 +1,48 @@
+.title {
+  margin-top: 40;
+  font-family: 'Mentone';
+  color: white;
+  horizontal-align: center;
+  font-size: 40;
+}
+
+.quote {
+  margin-top: 10;
+  font-family: sans-serif;
+  horizontal-align: center;
+  font-size: 20;
+  color: #e5e5e5;
+  font-weight: 300;
+}
+
+.btn {
+  background-color: #3bc14a;
+  color: #f5f5f5;
+  margin-bottom: 80;
+  height: 60;
+  margin-left: 30;
+  margin-right: 30;
+  border-radius: 30;
+  font-weight: bold;
+}
+
+.indicator {
+  height: 40;
+  width: 40;
+  transform: scale(1.5, 1.5);
+  color: white;
+}
+
+.right {
+  font-size: 30;
+  vertical-align: center;
+  horizontal-align: right;
+  margin-right: 10;
+}
+
+.left {
+  font-size: 30;
+  vertical-align: center;
+  horizontal-align: left;
+  margin-left: 10;
+}

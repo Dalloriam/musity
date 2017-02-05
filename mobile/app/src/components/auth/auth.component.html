@@ -1,0 +1,14 @@
+<GridLayout class="auth-container" rows="*">
+  <GridLayout class="auth-title" rows="*">
+    <StackLayout>
+      <Label text="Musity" class="title"></Label>
+      <Label text="Cover the world with music" class="quote"></Label>
+    </StackLayout>
+  </GridLayout>
+  <GridLayout class="auth-loader" rows="*">
+    <ActivityIndicator busy="{{ showIndicator }}" class="indicator"></ActivityIndicator>
+  </GridLayout>
+  <GridLayout class="auth-btn" rows="*">
+    <Button text="Log in with Spotify" class="btn" (tap)="login()"></Button>
+  </GridLayout>
+</GridLayout>

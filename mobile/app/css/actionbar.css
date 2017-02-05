@@ -1,0 +1,13 @@
+.actionbar {
+  height: 50;
+  background-color: #3bc14a;
+  color: #fff;
+}
+
+.actionbar-title {
+  horizontal-align: center;
+  vertical-align: center;
+  font-size: 20;
+  font-weight: bold;
+  color: white;
+}
