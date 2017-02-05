@@ -32,7 +32,7 @@ class Location(db.Document):
     address = db.StringField(required=False)
     artists = db.StringField()
     picture = db.StringField(required=False)
-    point = db.GeoPointField(required=True)
+    point = db.PointField(required=True)
     tracks = db.ListField(db.ReferenceField(Track), required=False)
 
 
@@ -68,29 +68,30 @@ def locations():
         dct["address"] = loct.address
         dct["artists"] = loct.artists
         dct["picture"] = loct.picture
-        dct["position"] = {"lng": loct.point[0], "lat": loct.point[1]}
+        dct["position"] = {"lng": loct.point["coordinates"][0], "lat": loct.point["coordinates"][1]}
         dct["tracks"] = [ob.serialize() for ob in loct.tracks]
         lst.append(dct)
     return json.dumps(lst)
 
-@app.route("/api/tracks/<longi>/<lat>")
+@app.route("/api/tracks/<float:longi>/<float:lat>")
 def locatetracks(longi, lat):
-    near = Location.objects(point__near={"type": "Point", "coordinates": [float(longi), float(lat)]})
+    near = Location.objects(point__near=[longi, lat])
     if near.count() == 0:
         return json.dumps({}),404
     x = near[0]
     dct = {}
-    dct["title"] = x.title
-    dct["address"] = x.address
-    dct["artists"] = x.artists
-    dct["picture"] = x.picture
+    dct["title"] = loct.title
+    dct["address"] = loct.address
+    dct["artists"] = loct.artists
+    dct["picture"] = loct.picture
+    dct["position"] = {"lng": loct.point["coordinates"][0], "lat": loct.point["coordinates"][1]}
     dct["tracks"] = [ob.serialize() for ob in x.tracks]
-    return json.dumps(near.count())
+    return json.dumps(dct)
 
 @app.route("/api/locations/<locationid>/tracks", methods=['POST'])
 def addTracks(locationid):
     loct = Location.objects(id=locationid)
-    if loct[0].tracks is None:
+    if loct is None:
         return json.dumps({}),404
     x = loct[0]
     tracks = request.get_json()
