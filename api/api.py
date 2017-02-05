@@ -104,14 +104,13 @@ def addTracks(locationid):
     if loct is None:
         return json.dumps({}), 404
     x = loct[0]
-    tracks = request.get_json()
-    for track in tracks:
-        trackObj = Track(spotify_id=track["spotify_id"], spotify_uri=track["spotify_uri"])
-        if trackObj not in x.tracks:
-            trackObj.save()
-            x.tracks.append(trackObj)
-            x.save()
-    return json.dumps(tracks)
+    track = request.get_json()
+    trackObj = Track(spotify_id=track["spotify_id"], spotify_uri=track["spotify_uri"])
+    if trackObj not in x.tracks:
+        trackObj.save()
+        x.tracks.append(trackObj)
+        x.save()
+    return json.dumps({})
 
 
 @app.route("/api/locations/<locationid>/tracks/<trackid>", methods=['DELETE'])
