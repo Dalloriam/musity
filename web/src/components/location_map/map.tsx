@@ -27,8 +27,8 @@ interface IMapState {
 const GettingStartedGoogleMap = withGoogleMap((props: IGmapProps) => {
     return <GoogleMap
         ref={props.onMapLoad}
-        defaultZoom={3}
-        defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+        defaultZoom={11}
+        defaultCenter={{ lat: 45.5017, lng: -73.5673 }}
     >
 
     {

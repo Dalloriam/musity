@@ -7,6 +7,8 @@ import { CreateTrackReceivedAction } from './tracks_received';
 
 import axios from "axios";
 
+import * as Config from 'Config';
+
 export class AddTrackAction implements IAction {
     type = "ADD_TRACK";
     track: ITrack;
@@ -25,8 +27,19 @@ export class TrackAddedAction implements IAction {
     }
 } 
 
-export function CreateAddTrackAction(track: ITrack) {
+export function CreateAddTrackAction(track: ITrack, locId: string) {
     dispatcher.dispatch(new AddTrackAction(track));
+
+    let url = Config.serverUrl + '/locations/' + locId + '/tracks';
+
+    axios.post(url, {spotify_id: track.id, spotify_uri: track.uri})
+    .then((resp) => {
+        console.log(resp);
+    },
+    (err) => {
+        console.log("BRUHHHHHHHH");
+    })
+
+
     dispatcher.dispatch(new TrackAddedAction(track))
-    // TODO: API Call
 }

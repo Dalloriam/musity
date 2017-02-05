@@ -1,6 +1,6 @@
 export interface IMarker {
     picture: string;
-    tracks: Array<string>;
+    tracks: Array<{spotify_uri: string, spotify_id: string}>;
     artists: string;
     address: string;
     title: string;

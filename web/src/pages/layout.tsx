@@ -24,11 +24,15 @@ export class Layout extends React.Component<ILayoutProps, ILayoutState> {
         }
     }
 
+    toggle() {
+        console.log("Yao")
+    }
+
     render() {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div className={"main-panel"}>
-                <AppBar className={"navbar"} title={this.state.title}/>
+                <AppBar className={"navbar"} title={this.state.title} showMenuIconButton={false}/>
                     <div className={"content"}>
                         { this.props.children }
                     </div>
